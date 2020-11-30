@@ -20,7 +20,7 @@ export class TallyController {
 
   private remoteOperatorTallyLight1 = new TallyLight({
     name: 'Remote Operator Tally Light 1',
-    identifier: '20003061',
+    identifier: '3fbb2e26',
     type: 'blink',
   });
 
