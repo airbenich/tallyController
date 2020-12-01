@@ -79,7 +79,14 @@ export class TallyLight {
    */
 
   private initBlink1() {
-    const blinkDevices = Blink1.devices();
+    let blinkDevices: any;
+    try {
+      blinkDevices = Blink1.devices();
+    } catch {
+      console.log('No Blink1 devices found.');
+
+      return;
+    }
 
     if (!blinkDevices.includes(this.config.identifier)) {
       console.log(
@@ -87,8 +94,15 @@ export class TallyLight {
       );
       return;
     }
-
-    this.blinkInstance = new Blink1(this.config.identifier);
+    try {
+      this.blinkInstance = new Blink1(this.config.identifier);
+      console.log('1');
+    } catch {
+      console.log(
+        'Initialization of Blink1 (SN:' + this.config.identifier + ') failed.'
+      );
+    }
+    console.log('2');
     if (!this.blinkInstance) {
       console.log(
         'Initialization of Blink1 (SN:' + this.config.identifier + ') failed.'
