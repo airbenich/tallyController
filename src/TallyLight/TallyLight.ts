@@ -96,13 +96,11 @@ export class TallyLight {
     }
     try {
       this.blinkInstance = new Blink1(this.config.identifier);
-      console.log('1');
     } catch {
       console.log(
         'Initialization of Blink1 (SN:' + this.config.identifier + ') failed.'
       );
     }
-    console.log('2');
     if (!this.blinkInstance) {
       console.log(
         'Initialization of Blink1 (SN:' + this.config.identifier + ') failed.'

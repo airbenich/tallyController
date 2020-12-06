@@ -51,13 +51,13 @@ export class TallyController {
   }
 
   private handleRemoteTallyStateChange() {
-    console.log('handleRemoteTallyStateChange:');
-    console.log({
-      remoteSelectedCamera: this.panasonicRpController.selectedCamera,
-      inputPreviewState: this.videoSwitcher.inputPreviewState,
-      inputProgramState: this.videoSwitcher.inputProgramState,
-      inTransition: this.videoSwitcher.inTransition,
-    });
+    // console.log('handleRemoteTallyStateChange:');
+    // console.log({
+    //   remoteSelectedCamera: this.panasonicRpController.selectedCamera,
+    //   inputPreviewState: this.videoSwitcher.inputPreviewState,
+    //   inputProgramState: this.videoSwitcher.inputProgramState,
+    //   inTransition: this.videoSwitcher.inTransition,
+    // });
 
     // handle Remote Tally
     if (
@@ -90,6 +90,12 @@ export class TallyController {
 
   private handleWebsocketsStateChanged() {
     const websocketCameraNumber = 4;
+    console.log('handleWebsocketsStateChanged:');
+    console.log({
+      inputPreviewState: this.videoSwitcher.inputPreviewState,
+      inputProgramState: this.videoSwitcher.inputProgramState,
+      inTransition: this.videoSwitcher.inTransition,
+    });
 
     // handle Remote Tally
     if (websocketCameraNumber === this.videoSwitcher.inputProgramState) {
@@ -110,16 +116,20 @@ export class TallyController {
   }
 
   public tallyPreviewChange() {
+    console.log('tallyPreviewChange');
+
     this.handleRemoteTallyStateChange();
     this.handleWebsocketsStateChanged();
   }
   public tallyProgramChange() {
+    console.log('tallyProgramChange');
+
     this.handleRemoteTallyStateChange();
     this.handleWebsocketsStateChanged();
   }
 
   public tallyInTransitionChange() {
-    // console.log('tallyInTransitionChange:' + state);
+    console.log('tallyInTransitionChange:' + this.videoSwitcher.inTransition);
     this.handleRemoteTallyStateChange();
     this.handleWebsocketsStateChanged();
   }

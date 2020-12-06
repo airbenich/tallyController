@@ -1,38 +1,41 @@
 /**
  * Websocket Server for Websocket Tally
  */
+import express, { Request, Response } from 'express';
+import ioserver, { Socket } from 'socket.io';
+import ioclient from 'socket.io-client';
 
-import express = require('express');
-import * as http from 'http';
-import io = require('socket.io');
 
 interface TallyWebsocketServerConfig {
   port: number;
 }
 
 interface TallyWebsocketServerCommandValue {
-    command: 'tally/program' | 'tally/preview' | 'tally/transition' | 'tally/off';
-    camera: string;
+  command: 'tally/program' | 'tally/preview' | 'tally/transition' | 'tally/off';
+  camera: string;
 }
 
 export class TallyWebsocketServer {
+  private app: any;
+  private server: any;
+  private port = 3000;
+  private io: any;
+
   private config: TallyWebsocketServerConfig;
   private websocketClients: any[] = [];
-  private httpServer = http.createServer(http);
-  private websocketServer: io.Server;
+  private websocketServer: any;
 
   constructor(initialConfig: TallyWebsocketServerConfig) {
+    this.app = express();
+    this.server = require('http').Server(this.app);
+    this.server.listen(this.port, () => console.log(`Tally Websocket Server listening on port: ${this.port}!`));
+    this.websocketServer = ioserver(this.server);
     this.config = initialConfig;
 
-    this.httpServer.listen(this.config.port, () => {
-      console.log('Websockets listening on *:' + this.config.port);
-    });
-
-    this.websocketServer = io();
 
     // Authentication
-    this.websocketServer.use((socket, next) => {
-      // console.log("Query: ", socket.handshake.query);
+    this.websocketServer.use((socket: any, next: any) => {
+      console.log("Query: ", socket.handshake.query);
       // return the result of next() to accept the connection.
       if (socket.handshake.query.authentication === 'sDJZn16TuP7zu82a') {
         return next();
@@ -42,8 +45,8 @@ export class TallyWebsocketServer {
     });
 
     // on conncection
-    this.websocketServer.on('connection', (socket) => {
-      console.log('Websocket client connected');
+    this.websocketServer.on('connection', (socket: any) => {
+      console.log('Websocket Tally client connected');
 
       // add client to clientlist
       this.websocketClients.push(socket);
@@ -52,12 +55,15 @@ export class TallyWebsocketServer {
       socket.emit('connetion', true);
 
       socket.on('disconnect', () => {
-        console.log('Client disconnected');
+        console.log('Websocket Tally client disconnected');
       });
     });
   }
 
-  public sendCommandToAllWebsocketClients(key: string, value: TallyWebsocketServerCommandValue) {
+  public sendCommandToAllWebsocketClients(
+    key: string,
+    value: TallyWebsocketServerCommandValue
+  ) {
     this.websocketClients.forEach((websocketClient) => {
       websocketClient.emit(key, value);
     });
