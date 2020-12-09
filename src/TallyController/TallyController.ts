@@ -89,7 +89,7 @@ export class TallyController {
   }
 
   private handleWebsocketsStateChanged() {
-    const websocketCameraNumber = 4;
+    const websocketCameraNumber = 7;
     console.log('handleWebsocketsStateChanged:');
     console.log({
       inputPreviewState: this.videoSwitcher.inputPreviewState,
