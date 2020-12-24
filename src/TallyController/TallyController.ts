@@ -1,6 +1,7 @@
 import { PanasonicRpController } from './../PanasonicRpController/PansonicRpController';
 import { VideoSwitcher } from './../VideoSwitcher/VideoSwitcher';
 import { TallyLight } from './../TallyLight/TallyLight';
+import { MultiViewTally } from '../MultiViewTally/MultiViewTally';
 import { TallyWebsocketServer } from './../TallyWebsocketServer/TallyWebsocketServer';
 
 export class TallyController {
@@ -22,6 +23,12 @@ export class TallyController {
     name: 'Remote Operator Tally Light 1',
     identifier: '3fbb2e26',
     type: 'blink',
+  });
+
+  private multiViewTally1 = new MultiViewTally({
+    name: 'Remote MultiView 1',
+    ip: '172.17.121.64',
+    type: 'blackmagicSdiTallyRestApi'
   });
 
   private mobileCameraTallyLight1 = new TallyLight({
@@ -115,22 +122,32 @@ export class TallyController {
     }
   }
 
+  private handleTallyChangeForMultiview() {
+    this.multiViewTally1.sendTallyCommandToArduino(1, this.videoSwitcher.inputProgramState === 1, false);
+    this.multiViewTally1.sendTallyCommandToArduino(3, this.videoSwitcher.inputProgramState === 2, false);
+    this.multiViewTally1.sendTallyCommandToArduino(2, this.videoSwitcher.inputProgramState === 3, false);
+    this.multiViewTally1.sendTallyCommandToArduino(4, this.videoSwitcher.inputProgramState === 4, false);
+  }
+
   public tallyPreviewChange() {
     console.log('tallyPreviewChange');
 
     this.handleRemoteTallyStateChange();
     this.handleWebsocketsStateChanged();
+    this.handleTallyChangeForMultiview();
   }
   public tallyProgramChange() {
     console.log('tallyProgramChange');
 
     this.handleRemoteTallyStateChange();
     this.handleWebsocketsStateChanged();
+    this.handleTallyChangeForMultiview();
   }
 
   public tallyInTransitionChange() {
     console.log('tallyInTransitionChange:' + this.videoSwitcher.inTransition);
     this.handleRemoteTallyStateChange();
     this.handleWebsocketsStateChanged();
+    this.handleTallyChangeForMultiview();
   }
 }
