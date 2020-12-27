@@ -23,11 +23,11 @@ export class MultiViewTally {
        this.axios.get('http://' + this.config.ip + '/tally?cam=' + camera + '&pgm=' + programFlag + '&pvw=' + previewFlag)
         .then((response: any) => {
           // handle success
-          console.log(response);
+          // console.log(response);
         })
         .catch((error: any) => {
           // handle error
-          console.log(error);
+          // console.log(error);
         });
      }
    }

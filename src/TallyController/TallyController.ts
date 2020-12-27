@@ -28,7 +28,7 @@ export class TallyController {
   private multiViewTally1 = new MultiViewTally({
     name: 'Remote MultiView 1',
     ip: '172.17.121.64',
-    type: 'blackmagicSdiTallyRestApi'
+    type: 'blackmagicSdiTallyRestApi',
   });
 
   private mobileCameraTallyLight1 = new TallyLight({
@@ -97,12 +97,12 @@ export class TallyController {
 
   private handleWebsocketsStateChanged() {
     const websocketCameraNumber = 7;
-    console.log('handleWebsocketsStateChanged:');
-    console.log({
-      inputPreviewState: this.videoSwitcher.inputPreviewState,
-      inputProgramState: this.videoSwitcher.inputProgramState,
-      inTransition: this.videoSwitcher.inTransition,
-    });
+    // console.log('handleWebsocketsStateChanged:');
+    // console.log({
+    //   inputPreviewState: this.videoSwitcher.inputPreviewState,
+    //   inputProgramState: this.videoSwitcher.inputProgramState,
+    //   inTransition: this.videoSwitcher.inTransition,
+    // });
 
     // handle Remote Tally
     if (websocketCameraNumber === this.videoSwitcher.inputProgramState) {
@@ -123,10 +123,28 @@ export class TallyController {
   }
 
   private handleTallyChangeForMultiview() {
-    this.multiViewTally1.sendTallyCommandToArduino(1, this.videoSwitcher.inputProgramState === 1, false);
-    this.multiViewTally1.sendTallyCommandToArduino(3, this.videoSwitcher.inputProgramState === 2, false);
-    this.multiViewTally1.sendTallyCommandToArduino(2, this.videoSwitcher.inputProgramState === 3, false);
-    this.multiViewTally1.sendTallyCommandToArduino(4, this.videoSwitcher.inputProgramState === 4, false);
+    const multiviewMapping = [];
+    multiviewMapping[1] = 1;
+    multiviewMapping[2] = 3;
+    multiviewMapping[3] = 2;
+    multiviewMapping[4] = 4;
+
+    console.log({
+      last: this.videoSwitcher.lastInputProgramState,
+      current: this.videoSwitcher.inputProgramState,
+    });
+
+    this.multiViewTally1.sendTallyCommandToArduino(
+      multiviewMapping[this.videoSwitcher.inputProgramState],
+      true,
+      false
+    );
+
+    this.multiViewTally1.sendTallyCommandToArduino(
+      multiviewMapping[this.videoSwitcher.lastInputProgramState],
+      false,
+      false
+    );
   }
 
   public tallyPreviewChange() {

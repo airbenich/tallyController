@@ -41,19 +41,19 @@ export class VideoSwitcher {
 
         this.myAtem.on('stateChanged', (state, pathToChange) => {
             if(state.video.ME['0']) {
-                if(this.lastInputProgramState !== state.video.ME['0'].programInput) {
-                    this.inputProgramState = state.video.ME['0'].programInput;
+                if(this.inputProgramState !== state.video.ME['0'].programInput) {
                     this.lastInputProgramState = this.inputProgramState;
+                    this.inputProgramState = state.video.ME['0'].programInput;
                     this.programChanged$.next(this.inputProgramState);
                 }
-                if(this.lastInputPreviewState !== state.video.ME['0'].previewInput) {
-                    this.inputPreviewState = state.video.ME['0'].previewInput;
+                if(this.inputPreviewState !== state.video.ME['0'].previewInput) {
                     this.lastInputPreviewState = this.inputPreviewState;
+                    this.inputPreviewState = state.video.ME['0'].previewInput;
                     this.previewChanged$.next(this.inputPreviewState);
                 }
-                if(this.lastInTransition !== state.video.ME['0'].inTransition) {
-                    this.inTransition = state.video.ME['0'].inTransition;
+                if(this.inTransition !== state.video.ME['0'].inTransition) {
                     this.lastInTransition = this.inTransition;
+                    this.inTransition = state.video.ME['0'].inTransition;
                     this.inTransitionChanged$.next(this.inTransition);
                 }
             }
