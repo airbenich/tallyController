@@ -17,6 +17,11 @@ export class LowerThirdTallyController {
     identifier: '20002C66',
     type: 'blink',
   });
+  private lowerThirdTally2 = new TallyLight({
+    name: 'Lower Third Tally Light 2',
+    identifier: '20003061',
+    type: 'blink',
+  });
 
   constructor(initialConfig: LowerThirdTallyControllerConfig) {
     this.config = initialConfig;
@@ -61,9 +66,11 @@ export class LowerThirdTallyController {
   public lowerThirdWarningOn() {
     // this.lowerThirdTally1.setPreviewTally();
     this.lowerThirdTally1.setAlarm();
+    this.lowerThirdTally2.setAlarm();
   }
 
   public lowerThirdWarningOff() {
     this.lowerThirdTally1.setTallyOff();
+    this.lowerThirdTally2.setTallyOff();
   }
 }
