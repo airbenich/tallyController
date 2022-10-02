@@ -11,7 +11,7 @@ export class TallyController {
 
   private panasonicRpController = new PanasonicRpController({
     host: '172.17.121.13',
-    port: 3001,
+    port: 3000,
     websocketAuthToken: 'sDJZn16TuP7zu82a',
   });
 
