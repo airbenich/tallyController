@@ -33,7 +33,7 @@ export default class CanonXCController {
             'f.tally': string;
             'f.tally.mode'?: string;
         } = {
-            's.priority': 1,
+            's.priority': 5,
             'f.tally': status,
         }
 
