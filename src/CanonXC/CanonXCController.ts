@@ -28,7 +28,7 @@ export default class CanonXCController {
     }
 
     private setTally(status: 'on' | 'off', mode?: 'preview' | 'program') {
-        let tallyOptions: {
+        const tallyOptions: {
             'f.tally': string;
             'f.tally.mode'?: string;
         } = {
@@ -39,8 +39,10 @@ export default class CanonXCController {
         this.sendSessionlessCommand('control.cgi', tallyOptions);
     }
 
-    private sendSessionlessCommand(command: string, params: Object) {
-        axios.get(this.baseUrl + command + '?', { params });
+    private sendSessionlessCommand(command: string, params: object) {
+        axios.get(this.baseUrl + command + '?', { params }).catch((reason) => {
+            console.log(this.config.name + '(' + this.config.ipAdress + ') is not reachable');
+        });
     }
 }
 
