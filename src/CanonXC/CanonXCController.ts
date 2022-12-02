@@ -29,11 +29,9 @@ export default class CanonXCController {
 
     private setTally(status: 'on' | 'off', mode?: 'preview' | 'program') {
         let tallyOptions: {
-            's.priority': number;
             'f.tally': string;
             'f.tally.mode'?: string;
         } = {
-            's.priority': 5,
             'f.tally': status,
         }
 
