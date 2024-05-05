@@ -42,8 +42,8 @@ export class TallyController {
   private mobileCanonCameraTally1 = new CanonXCController({
     name: 'Mobile Camera 5 – Canon XF605',
     ipAdress: '172.17.121.86',
-    username: 'test',
-    password: 'test'
+    username: 'admin',
+    password: 'tontechnikmh166'
   });
 
   constructor() {
