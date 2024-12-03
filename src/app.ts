@@ -3,6 +3,6 @@ import { LowerThirdTallyController } from './LowerThirdTallyController/LowerThir
 
 const tallyController = new TallyController();
 const lowerThirdTallyController = new LowerThirdTallyController({
-    host: '172.17.121.14',
+    host: '10.1.1.31',
     port: 3000
 });

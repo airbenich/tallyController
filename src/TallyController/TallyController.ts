@@ -11,13 +11,13 @@ export class TallyController {
   });
 
   private panasonicRpController = new PanasonicRpController({
-    host: '172.17.121.13',
+    host: '10.1.1.32',
     port: 3000,
     websocketAuthToken: 'sDJZn16TuP7zu82a',
   });
 
   private videoSwitcher = new VideoSwitcher({
-    host: '172.17.121.61',
+    host: '10.1.3.2',
   });
 
   private remoteOperatorTallyLight1 = new TallyLight({
@@ -28,7 +28,7 @@ export class TallyController {
 
   private multiViewTally1 = new MultiViewTally({
     name: 'Remote MultiView 1',
-    ip: '172.17.121.64',
+    ip: '10.1.3.4',
     type: 'blackmagicSdiTallyRestApi',
   });
 
@@ -41,7 +41,7 @@ export class TallyController {
 
   private mobileCanonCameraTally1 = new CanonXCController({
     name: 'Mobile Camera 5 – Canon XF605',
-    ipAdress: '172.17.121.86',
+    ipAdress: '10.1.3.45',
     username: 'admin',
     password: 'tontechnikmh166'
   });
